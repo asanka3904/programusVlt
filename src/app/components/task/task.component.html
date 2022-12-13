@@ -1,0 +1,80 @@
+<div class="container-fluid py-3">
+  <div class="row mx-50">
+    
+      <div class="col col-8 justify-content-center my-4">
+        <div class="d-flex p-2 justify-content-between w-80">
+      <div class="px-3 mx-3">
+        <input class="form-check-input"  type="checkbox" value="IncludeOverdue" id="overdue" (change)="statusChange($event)" >
+        <span class="badge badge-primary bg-primary mx-3">Overdue Tasks</span>
+
+      </div>
+      <div  class="px-3 mx-3">
+        <input class="form-check-input" type="checkbox" value="IncludeOutstanding" id="danger" (change)="statusChange($event)">
+        <span class="badge badge-danger bg-danger mx-3">Pending Tasks</span>
+      </div>
+      <div  class="px-3 mx-3">
+        <input class="form-check-input" type="checkbox" value="IncludeCompleted" id="completed" (change)="statusChange($event)">
+        <span class="badge badge-secondary bg-secondary mx-3">completed Tasks</span>
+      </div>
+    </div>
+     </div>
+    
+  </div>
+  <div class="row my-3">
+    <div class="col col-12">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item" *ngFor="let data of taskList">
+          <mat-accordion>
+            <mat-expansion-panel
+              id="data.id"
+              (opened)="(onClickExpand)"
+              (closed)="(onClickExpand)"
+              
+            >
+              <mat-expansion-panel-header>
+                <mat-panel-description>
+                  <div class="d-flex p-2 justify-content-between w-100">
+                    <input type="checkbox" />
+
+                    <p>{{ data.name }}</p>
+                    <p *ngIf="data.completed == true">completed</p>
+                    <p *ngIf="data.cancelled == true">cancelled</p>
+                    <p *ngIf="data.completed == false && data.dueDate < today">
+                      completed
+                    </p>
+
+                    <p>{{ data.date | date }}</p>
+                    <p>{{ data?.assignedUsers[0]?.firstName }}</p>
+                    <p>{{ data.reference }}</p>
+
+                    <button
+                      type="button"
+                      class="btn btn-primary"
+                      data-bs-toggle="modal"
+                    >
+                      edit
+                    </button>
+                  </div>
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+
+              <div class="d-flex p-2 flex-column">
+                <div class="d-flex flex-column">
+                  <h5>task detail</h5>
+                  <div class="d-flex p-2 justify-content-between w-75">
+                    <p>{{ data?.assignedUsers[0]?.userName }}</p>
+                    <p>no created By</p>
+                  </div>
+                </div>
+                <div class="d-flex flex-column">
+                  <h5>task description</h5>
+                  <p>{{ data.note }}</p>
+                </div>
+              </div>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
